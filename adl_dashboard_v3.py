@@ -315,13 +315,13 @@ def stat_row(items):
 # ─── DATA ────────────────────────────────────────────────────────────────────
 @st.cache_data
 def load():
-    career = pd.read_csv("/Users/husnarafi/Documents/BC3/Python/CSV Exports/career_search_trends.csv", parse_dates=["date"])
-    firm   = pd.read_csv("/Users/husnarafi/Documents/BC3/Python/CSV Exports/trends_firm_careers.csv",   parse_dates=["date"])
-    vsai   = pd.read_csv("/Users/husnarafi/Documents/BC3/Python/CSV Exports/trends_consulting_vs_ai.csv", parse_dates=["date"])
-    skill  = pd.read_csv("/Users/husnarafi/Documents/BC3/Python/CSV Exports/trends_skill_demand.csv",   parse_dates=["date"])
-    junior = pd.read_csv("/Users/husnarafi/Documents/BC3/Python/CSV Exports/trends_junior_experience.csv", parse_dates=["date"])
+    career = pd.read_csv("career_search_trends.csv", parse_dates=["date"])
+    firm   = pd.read_csv("trends_firm_careers.csv",   parse_dates=["date"])
+    vsai   = pd.read_csv("trends_consulting_vs_ai.csv", parse_dates=["date"])
+    skill  = pd.read_csv("trends_skill_demand.csv",   parse_dates=["date"])
+    junior = pd.read_csv("trends_junior_experience.csv", parse_dates=["date"])
 
-    al = pd.read_excel("/Users/husnarafi/Documents/BC3/Python/CSV Exports/ADL_Alumni_Career_Destinations.xlsx")
+    al = pd.read_excel("ADL_Alumni_Career_Destinations.xlsx")
     al.columns = ["Person","Joined","Left","Company","Industry","Role","Link"]
     al["Industry"] = al["Industry"].str.strip()
     al["Joined"]   = pd.to_datetime(al["Joined"], errors="coerce")
@@ -331,7 +331,7 @@ def load():
     al["Era"]      = al["AI_era"].map({True:"AI Era (2022+)",False:"Pre-AI"})
     al["JoinYr"]   = al["Joined"].dt.year
 
-    hc = pd.read_excel("/Users/husnarafi/Documents/BC3/Python/CSV Exports/Consulting_Entry_Level_Headcount_Analysis.xlsx")
+    hc = pd.read_excel("Consulting_Entry_Level_Headcount_Analysis.xlsx")
     hc = hc[["Company","Entry-level","Total Employees","Junior Ratio"]].dropna(subset=["Company","Junior Ratio"])
     hc = hc[hc["Company"].apply(lambda x: isinstance(x,str) and len(x)<50 and "Firm" not in str(x))]
     hc["Pct"] = (hc["Junior Ratio"]*100).round(1)
